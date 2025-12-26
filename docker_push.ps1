@@ -1,0 +1,1 @@
+docker push ghcr.io/bteam-toku/redmine_export:latest

@@ -1,0 +1,5 @@
+pandas
+python-redmine
+holidays
+git+https://github.com/bteam-toku/bteam_utils.git
+git+https://github.com/bteam-toku/its_accessor.git

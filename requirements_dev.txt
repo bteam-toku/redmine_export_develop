@@ -1,0 +1,15 @@
+bteam-utils @ git+https://github.com/bteam-toku/bteam_utils.git@783d8d7a95db99879d269164d33c8e1bbedca6b9
+certifi==2025.11.12
+charset-normalizer==3.4.4
+holidays==0.87
+idna==3.11
+its-accessor @ git+https://github.com/bteam-toku/its_accessor.git@f5790874b87d65c0c5051df0a03d321d156a44de
+numpy==2.4.0
+pandas==2.3.3
+python-dateutil==2.9.0.post0
+python-redmine==2.5.0
+pytz==2025.2
+requests==2.32.5
+six==1.17.0
+tzdata==2025.3
+urllib3==2.6.2
