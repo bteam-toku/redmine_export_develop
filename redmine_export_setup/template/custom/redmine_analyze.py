@@ -5,7 +5,7 @@ from xml.etree.ElementTree import Element, SubElement
 class RedmineAnalyze(BaseRedmineAnalyze):
     """Redmine分析クラス
     """
-    __i_accessor: RedmineAccessor = None
+    __accessor: RedmineAccessor = None
 
     #
     # コンストラクタ/デストラクタ
@@ -13,7 +13,7 @@ class RedmineAnalyze(BaseRedmineAnalyze):
     def __init__(self, accessor: RedmineAccessor):
         """コンストラクタ
         """
-        self.__i_accessor = accessor
+        self.__accessor = accessor
         super().__init__()
     
     def __del__(self):

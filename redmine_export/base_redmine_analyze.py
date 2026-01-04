@@ -7,7 +7,7 @@ from xml.etree.ElementTree import Element, SubElement
 
 class BaseRedmineAnalyze(AbstractItsExport):
     # カレンダーインスタンス
-    ins_calendar:CommonCalendar = None
+    calendar:CommonCalendar = None
     # DATE
     _as_of_date = None # 基準日
     # Issue Data
@@ -136,7 +136,7 @@ class BaseRedmineAnalyze(AbstractItsExport):
         """
         # パラメータを設定
         self._as_of_date = date
-        self.ins_calendar = calendar
+        self.calendar = calendar
         # Issueの情報を取得
         self._get_issue_data(issue)
         # Issueの情報を分析
@@ -181,7 +181,7 @@ class BaseRedmineAnalyze(AbstractItsExport):
         el_manhour_delayed.text = str_true if self._analyze_manhour_delayed else str_false
 
         # 入力データ作成
-        i_evm_input = CommonEVMInput(
+        evm_input = CommonEVMInput(
             status_ended=self._status_ended,
             status_ongoing=self._status_ongoing,
             status_notyet=self._status_notyet,
@@ -196,44 +196,44 @@ class BaseRedmineAnalyze(AbstractItsExport):
             done_ratio=self._done_ratio
         )
         # EVM計算実行
-        i_evm = CommonEVM()
+        common_evm = CommonEVM()
         # 却下ステータスは計算対象外
         if(self._status_reject is False):
-            i_evm.set_input_data(i_evm_input, self._as_of_date, self.ins_calendar)
-            i_evm.calculate()
+            common_evm.set_input_data(evm_input, self._as_of_date, self.calendar)
+            common_evm.calculate()
         # pv
         el_bac = SubElement(element, "bac")
-        el_bac.text = str(i_evm.get_bac())
+        el_bac.text = str(common_evm.get_bac())
         # pv
         el_pv = SubElement(element, "pv")
-        el_pv.text = str(i_evm.get_pv())
+        el_pv.text = str(common_evm.get_pv())
         # ev
         el_ev = SubElement(element, "ev")
-        el_ev.text = str(i_evm.get_ev())
+        el_ev.text = str(common_evm.get_ev())
         # ac
         el_ac = SubElement(element, "ac")
-        el_ac.text = str(i_evm.get_ac())
+        el_ac.text = str(common_evm.get_ac())
         # sv
         el_sv = SubElement(element, "sv")
-        el_sv.text = str(i_evm.get_sv())
+        el_sv.text = str(common_evm.get_sv())
         # cv
         el_cv = SubElement(element, "cv")
-        el_cv.text = str(i_evm.get_cv())
+        el_cv.text = str(common_evm.get_cv())
         # spi
         el_spi = SubElement(element, "spi")
-        el_spi.text = str(i_evm.get_spi())
+        el_spi.text = str(common_evm.get_spi())
         # cpi
         el_cpi = SubElement(element, "cpi")
-        el_cpi.text = str(i_evm.get_cpi())
+        el_cpi.text = str(common_evm.get_cpi())
         # etc
         el_etc= SubElement(element, "etc")
-        el_etc.text = str(i_evm.get_etc())
+        el_etc.text = str(common_evm.get_etc())
         # eac
         el_eac= SubElement(element, "eac")
-        el_eac.text = str(i_evm.get_eac())
+        el_eac.text = str(common_evm.get_eac())
         # vac
         el_vac= SubElement(element, "vac")
-        el_vac.text = str(i_evm.get_vac())
+        el_vac.text = str(common_evm.get_vac())
 
     #
     # protected method
@@ -414,7 +414,7 @@ class BaseRedmineAnalyze(AbstractItsExport):
         if(self._analyze_duedate_past is True):return
         # 残工数が期日におさまらない
         if(self._expect_remain_hours > \
-          (self.ins_calendar.count_businessday(self._as_of_date+timedelta(days=1), self._due_date))*float(8)):
+          (self.calendar.count_businessday(self._as_of_date+timedelta(days=1), self._due_date))*float(8)):
             self._analyze_manhour_delayed = True
 
     def _calculate_progress_data(self, issue):
@@ -440,9 +440,9 @@ class BaseRedmineAnalyze(AbstractItsExport):
             self._spent_days = 0
         else:                        
             # 総作業日数
-            self._totaol_days = self.ins_calendar.count_businessday(self._start_date, self._due_date)
+            self._totaol_days = self.calendar.count_businessday(self._start_date, self._due_date)
             # 当日作業日数
-            self._spent_days = self.ins_calendar.count_businessday(self._start_date, self._as_of_date)
+            self._spent_days = self.calendar.count_businessday(self._start_date, self._as_of_date)
         
         # 作業工数を計算する
         # 予測実績工数は作業時間そのまま

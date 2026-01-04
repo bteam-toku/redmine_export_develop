@@ -6,7 +6,7 @@ from redminelib.resources import Issue
 class RedmineExport(BaseRedmineExport):
     """Redmine_exportの具象化クラス
     """
-    __i_accessor: RedmineAccessor = None
+    __accessor: RedmineAccessor = None
 
     #
     # コンストラクタ・デストラクタ
@@ -14,7 +14,7 @@ class RedmineExport(BaseRedmineExport):
     def __init__(self, accessor: RedmineAccessor):
         """コンストラクタ
         """
-        self.__i_accessor = accessor
+        self.__accessor = accessor
         super().__init__()
     
     def __del__(self):
