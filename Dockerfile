@@ -19,3 +19,8 @@ COPY ./redmine_export_setup ./redmine_export_setup
 
 # コンテナ起動時のデフォルトコマンド
 ENTRYPOINT ["python", "-m"]
+
+# メタデータの追加
+LABEL org.opencontainers.image.source="https://github.com/bteam-toku/redmine_export_develop.git"
+LABEL org.opencontainers.image.licenses="MIT"
+LABEL org.opencontainers.image.description="Redmineチケット一覧出力（Dockerコンテナ）"
